@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Σ Dev</title>
+<meta name="description" content="Personal portfolio of Σ Dev (ometh2006) — A passionate student developer exploring the intersection of creativity and code." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>Σ</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #050514;
+    --fg: #f0eeff;
+    --muted: rgba(240,238,255,0.5);
+    --faint: rgba(240,238,255,0.1);
+    --purple: #a855f7;
+    --blue: #3b82f6;
+    --pink: #ec4899;
+    --green: #10b981;
+    --r: 0.75rem;
+    --font-display: 'Syne', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-display);
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  #cosmos {
+    position: fixed; inset: 0;
+    width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  section    { position: relative; z-index: 1; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    backdrop-filter: blur(12px);
+    background: rgba(5,5,20,0.5);
+    border-bottom: 1px solid var(--faint);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.5rem; max-width: 1100px; margin: 0 auto;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--fg); }
+  .nav-logo-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--purple), var(--blue));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 800; color: #fff;
+  }
+  .nav-logo span { font-weight: 700; font-size: 1rem; }
+  .nav-links { display: flex; align-items: center; gap: 2rem; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 0.85rem;
+    font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-btn {
+    padding: 0.4rem 1rem; border-radius: 999px;
+    border: 1px solid rgba(168,85,247,0.35); background: rgba(168,85,247,0.08);
+    color: #c084fc; font-family: var(--font-display); font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .nav-btn:hover { background: rgba(168,85,247,0.2); border-color: rgba(168,85,247,0.6); }
+  @media (max-width: 640px) { .nav-links .hide-sm { display: none; } }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.8rem; border-radius: 999px;
+    font-family: var(--font-display); font-weight: 700; font-size: 0.9rem;
+    cursor: pointer; text-decoration: none; transition: transform 0.15s, box-shadow 0.15s; border: none;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+  .btn-primary { background: linear-gradient(135deg, var(--purple), var(--blue)); color: #fff; }
+  .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--fg); }
+  .btn-outline:hover { background: rgba(255,255,255,0.06); }
+
+  #about {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 7rem 1.5rem 4rem;
+  }
+  .hero-inner { text-align: center; max-width: 760px; margin: 0 auto; }
+  .hero-avatar { position: relative; display: inline-block; margin-bottom: 2rem; }
+  .hero-avatar-glow {
+    position: absolute; inset: -8px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple), var(--pink), var(--blue));
+    filter: blur(20px); opacity: 0.5; animation: pulse 3s ease-in-out infinite;
+  }
+  .hero-avatar-ring {
+    position: relative; width: 130px; height: 130px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple), var(--pink), var(--blue)); padding: 3px;
+  }
+  .hero-avatar-inner {
+    width: 100%; height: 100%; border-radius: 50%; background: #0d0d24;
+    display: flex; align-items: center; justify-content: center; font-size: 3.2rem;
+  }
+  .hero-rocket {
+    position: absolute; bottom: -4px; right: -4px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--green), #34d399);
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    padding: 0.3rem 0.9rem; border-radius: 999px;
+    border: 1px solid rgba(168,85,247,0.3); background: rgba(168,85,247,0.08);
+    color: #c084fc; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1.2rem;
+  }
+  .hero-title {
+    font-size: clamp(3.2rem, 9vw, 6.5rem); font-weight: 800; line-height: 1;
+    background: linear-gradient(135deg, #fff 0%, #d8b4fe 50%, #93c5fd 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 0.6rem;
+  }
+  .hero-sub { font-size: clamp(1rem, 2.5vw, 1.4rem); color: var(--muted); margin-bottom: 1.5rem; font-family: var(--font-mono); }
+  .hero-bio { font-size: 1rem; line-height: 1.8; color: rgba(240,238,255,0.65); max-width: 580px; margin: 0 auto 2.5rem; }
+  .hero-bio strong { color: #c084fc; font-weight: 700; }
+  .hero-stats { display: flex; justify-content: center; gap: 3rem; padding: 2rem 0; margin-bottom: 2rem; }
+  .stat-num { font-size: 2.4rem; font-weight: 800; color: var(--fg); line-height: 1; }
+  .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; letter-spacing: 0.05em; text-transform: uppercase; }
+  .hero-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
+  .scroll-hint { font-size: 1.4rem; animation: bounce 2s ease-in-out infinite; color: rgba(255,255,255,0.3); display: block; }
+
+  .section-heading { text-align: center; margin-bottom: 3.5rem; }
+  .section-heading h2 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; color: var(--fg);
+    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  }
+  .section-heading p { color: var(--muted); margin-top: 0.8rem; font-size: 0.95rem; max-width: 540px; margin-inline: auto; line-height: 1.7; }
+
+  #skills { padding: 6rem 1.5rem; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+  .skill-card {
+    background: rgba(255,255,255,0.04); border: 1px solid var(--faint);
+    border-radius: var(--r); padding: 1rem 1.2rem; transition: border-color 0.3s, transform 0.3s;
+  }
+  .skill-card:hover { border-color: rgba(168,85,247,0.35); transform: scale(1.03); }
+  .skill-top { display: flex; justify-content: space-between; margin-bottom: 0.6rem; }
+  .skill-name { font-weight: 700; font-size: 0.9rem; }
+  .skill-pct { color: var(--purple); font-size: 0.82rem; font-family: var(--font-mono); }
+  .skill-bar-bg { height: 6px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
+  .skill-bar-fill {
+    height: 100%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--purple), var(--blue));
+    width: 0; transition: width 1.2s cubic-bezier(.4,0,.2,1);
+  }
+
+  #projects { padding: 6rem 1.5rem; }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.4rem; }
+  .project-card {
+    background: rgba(255,255,255,0.04); border: 1px solid var(--faint);
+    border-radius: calc(var(--r) * 1.5); overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    display: flex; flex-direction: column;
+  }
+  .project-card:hover { border-color: rgba(168,85,247,0.3); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(168,85,247,0.12); }
+  .project-stripe { height: 3px; }
+  .project-body { padding: 1.4rem 1.4rem 1.2rem; flex: 1; display: flex; flex-direction: column; }
+  .project-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
+  .project-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  .project-link { color: rgba(255,255,255,0.35); transition: color 0.2s; font-size: 1rem; }
+  .project-link:hover { color: var(--fg); }
+  .project-name { font-size: 1.15rem; font-weight: 800; margin-bottom: 0.4rem; transition: color 0.2s; }
+  .project-card:hover .project-name { color: #c084fc; }
+  .project-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; flex: 1; }
+  .project-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1.2rem; }
+  .lang-badge {
+    font-size: 0.75rem; font-weight: 700; font-family: var(--font-mono);
+    padding: 0.25rem 0.7rem; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.65);
+  }
+  .stars { display: flex; align-items: center; gap: 0.35rem; font-size: 0.82rem; color: var(--muted); font-family: var(--font-mono); }
+  .more-card {
+    background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(59,130,246,0.08));
+    border: 1px solid rgba(168,85,247,0.2); border-radius: calc(var(--r) * 1.5);
+    min-height: 180px; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 1rem; padding: 2rem; text-align: center; transition: border-color 0.3s;
+  }
+  .more-card:hover { border-color: rgba(168,85,247,0.45); }
+  .more-card-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(168,85,247,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+  .more-card p { color: var(--muted); font-size: 0.88rem; }
+
+  #academind { padding: 6rem 1.5rem; }
+  .academind-card {
+    background: linear-gradient(135deg, rgba(88,28,135,0.35), rgba(30,58,138,0.35));
+    border: 1px solid rgba(168,85,247,0.2); border-radius: calc(var(--r) * 2.5);
+    overflow: hidden; padding: 3rem;
+  }
+  .academind-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  @media (max-width: 768px) { .academind-grid { grid-template-columns: 1fr; } .phone-col { display: none; } }
+  .academind-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.9rem;
+    border-radius: 999px; background: linear-gradient(90deg, var(--purple), var(--blue));
+    color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; margin-bottom: 1.2rem;
+  }
+  .academind-title { font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 800; line-height: 1.1; margin-bottom: 0.4rem; }
+  .academind-sub { font-size: 1rem; color: var(--muted); margin-bottom: 1.2rem; font-family: var(--font-mono); }
+  .academind-desc { font-size: 0.93rem; line-height: 1.8; color: rgba(240,238,255,0.65); margin-bottom: 2rem; }
+  .features { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 2rem; }
+  .feature { display: flex; align-items: flex-start; gap: 0.9rem; }
+  .feature-icon { width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0; background: rgba(168,85,247,0.18); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .feature-name { font-weight: 700; font-size: 0.92rem; margin-bottom: 0.15rem; }
+  .feature-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+  .academind-cta { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+
+  .phone-col { display: flex; align-items: center; justify-content: center; }
+  .phone { width: 230px; background: #0a0a1e; border-radius: 2.5rem; border: 3px solid #1a1a3e; overflow: hidden; box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04); position: relative; }
+  .phone-screen { background: linear-gradient(160deg, #1e0a3c, #0a1a3e); padding: 2.5rem 1rem 1.5rem; }
+  .phone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 22px; background: #0a0a1e; border-radius: 0 0 16px 16px; }
+  .phone-app-header { text-align: center; margin-bottom: 1.2rem; }
+  .phone-app-icon { width: 52px; height: 52px; border-radius: 14px; background: linear-gradient(135deg, var(--purple), var(--blue)); margin: 0 auto 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; color: #fff; }
+  .phone-app-name { font-size: 0.9rem; font-weight: 700; }
+  .phone-app-tagline { font-size: 0.65rem; color: var(--muted); }
+  .phone-courses { display: flex; flex-direction: column; gap: 0.5rem; }
+  .phone-course { background: rgba(255,255,255,0.07); border-radius: 0.7rem; padding: 0.6rem; display: flex; align-items: center; gap: 0.6rem; border: 1px solid rgba(255,255,255,0.04); }
+  .course-icon { width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  .course-name { font-size: 0.72rem; font-weight: 700; }
+  .course-meta { font-size: 0.6rem; color: var(--muted); }
+  .phone-badge-students { position: absolute; right: -16px; top: 80px; background: var(--green); color: #fff; font-size: 0.62rem; font-weight: 700; padding: 0.3rem 0.6rem; border-radius: 999px; white-space: nowrap; animation: pulse 3s ease-in-out infinite; }
+  .phone-badge-rated { position: absolute; left: -16px; bottom: 100px; background: var(--purple); color: #fff; font-size: 0.62rem; font-weight: 700; padding: 0.3rem 0.6rem; border-radius: 999px; }
+
+  footer { position: relative; z-index: 1; padding: 5rem 1.5rem 3rem; border-top: 1px solid var(--faint); text-align: center; }
+  .footer-logo { width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, var(--purple), var(--blue)); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 800; color: #fff; margin: 0 auto 1rem; }
+  footer h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem; }
+  footer .footer-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+  .footer-links { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; }
+  .footer-copy { color: rgba(255,255,255,0.2); font-size: 0.8rem; line-height: 1.7; font-family: var(--font-mono); }
+
+  #music-player { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 99; display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
+  #autoplay-notice { background: rgba(234,179,8,0.15); border: 1px solid rgba(234,179,8,0.4); color: #fde047; font-size: 0.72rem; padding: 0.4rem 0.8rem; border-radius: 0.6rem; display: none; }
+  #autoplay-notice.visible { display: block; }
+  .player-row { display: flex; align-items: center; gap: 0.6rem; }
+  .player-label { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.8rem; border-radius: 999px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); font-size: 0.72rem; color: rgba(255,255,255,0.75); font-family: var(--font-mono); transition: border-color 0.3s, background 0.3s; }
+  .player-label.playing { background: linear-gradient(90deg, rgba(168,85,247,0.15), rgba(59,130,246,0.15)); border-color: rgba(168,85,247,0.4); }
+  .player-controls { display: flex; align-items: center; gap: 0.2rem; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 999px; padding: 0.25rem; }
+  .player-btn { width: 36px; height: 36px; border-radius: 50%; background: transparent; border: none; cursor: pointer; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: background 0.2s; }
+  .player-btn:hover { background: rgba(255,255,255,0.1); }
+  .viz { display: none; align-items: flex-end; gap: 2px; height: 22px; }
+  .viz.visible { display: flex; }
+  .viz-bar { width: 4px; border-radius: 999px; background: linear-gradient(to top, var(--purple), #60a5fa); animation: vizpulse 0.5s ease-in-out infinite alternate; }
+  .viz-bar:nth-child(1) { height: 55%; animation-delay: 0s; }
+  .viz-bar:nth-child(2) { height: 80%; animation-delay: 0.15s; }
+  .viz-bar:nth-child(3) { height: 45%; animation-delay: 0.3s; }
+  .viz-bar:nth-child(4) { height: 70%; animation-delay: 0.45s; }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @keyframes pulse { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.05); } }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+  @keyframes vizpulse { from { transform: scaleY(0.5); } to { transform: scaleY(1); } }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(168,85,247,0.4); border-radius: 999px; }
+
+  svg.icon { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+</head>
+<body>
+
+<canvas id="cosmos"></canvas>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#about" class="nav-logo">
+      <div class="nav-logo-icon">Σ</div>
+      <span>Dev</span>
+    </a>
+    <div class="nav-links">
+      <a href="#about" class="hide-sm">About</a>
+      <a href="#projects" class="hide-sm">Projects</a>
+      <a href="#academind" class="nav-btn">Academind</a>
+      <a href="https://github.com/ometh2006" target="_blank" rel="noopener noreferrer" title="GitHub">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<section id="about">
+  <div class="hero-inner">
+    <div class="hero-avatar">
+      <div class="hero-avatar-glow"></div>
+      <div class="hero-avatar-ring">
+        <div class="hero-avatar-inner">Σ</div>
+      </div>
+      <div class="hero-rocket">🚀</div>
+    </div>
+
+    <div class="badge">✦ Developer</div>
+
+    <h1 class="hero-title">Σ Dev</h1>
+    <p class="hero-sub">Crafting Digital Experiences</p>
+
+    <p class="hero-bio">
+      ⚡<strong>I AM </strong> exploring the intersection of creativity and code.
+      Building innovative solutions from web apps to automation tools,
+      with a vision to make technology accessible to everyone.
+    </p>
+
+    <!-- BUG 1 FIX: original had a dangling unclosed <div> before the ∞ stat,
+         which caused the hero-stats block to have mismatched open/close tags.
+         The broken structure swallowed .hero-cta and .scroll-hint inside the
+         unclosed div, pushing them out of the layout flow entirely. Fixed by
+         removing the orphan <div> so the stats block is properly formed. -->
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Curiosity</div>
+      </div>
+    </div>
+
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        View Projects
+      </a>
+      <a href="https://github.com/ometh2006" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub Profile
+      </a>
+    </div>
+
+    <span class="scroll-hint">↓</span>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container">
+    <div class="section-heading reveal">
+      <h2><span class="icon">⬡</span> Skills &amp; Technologies</h2>
+    </div>
+    <div class="skills-grid reveal" id="skills-grid"></div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="container">
+    <div class="section-heading reveal">
+      <h2>🚀 Featured Projects</h2>
+      <p>A collection of projects showcasing my journey in software development. Each represents a unique challenge and learning experience.</p>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-stripe" style="background:linear-gradient(90deg,#ec4899,#f43f5e)"></div>
+        <div class="project-body">
+          <div class="project-head">
+            <div class="project-icon" style="background:linear-gradient(135deg,#ec4899,#f43f5e)">🤖</div>
+            <a class="project-link" href="https://github.com/ometh2006/tiktok-bot" target="_blank" rel="noopener">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+          <div class="project-name">tiktok-bot</div>
+          <div class="project-desc">Automated TikTok bot with advanced features for engagement and automation.</div>
+          <div class="project-footer">
+            <span class="lang-badge">Python</span>
+            <span class="stars">⭐ 12</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-stripe" style="background:linear-gradient(90deg,#10b981,#34d399)"></div>
+        <div class="project-body">
+          <div class="project-head">
+            <div class="project-icon" style="background:linear-gradient(135deg,#10b981,#34d399)">🛡️</div>
+            <a class="project-link" href="https://github.com/ometh2006/calculator" target="_blank" rel="noopener">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+          <div class="project-name">Σ VPN</div>
+          <div class="project-desc">A modern Android VPN client supporting V2Ray (VMess/VLESS) and SSH Tunnel protocols, built with Jetpack Compose.</div>
+          <div class="project-footer">
+            <!-- BUG 4 FIX: was "HTML/CSS" — Σ VPN is a Kotlin/Jetpack Compose Android app -->
+            <span class="lang-badge">Kotlin</span>
+            <span class="stars">⭐ 8</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-stripe" style="background:linear-gradient(90deg,#a855f7,#7c3aed)"></div>
+        <div class="project-body">
+          <div class="project-head">
+            <div class="project-icon" style="background:linear-gradient(135deg,#a855f7,#7c3aed)">✨</div>
+            <a class="project-link" href="https://github.com/ometh2006/ometh2006" target="_blank" rel="noopener">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+          <div class="project-name">AcadeMind</div>
+          <div class="project-desc">Visualise your study performance with deep analytics.</div>
+          <div class="project-footer">
+            <!-- BUG 5 FIX: was "Markdown" — AcadeMind is a Kotlin/Android app -->
+            <span class="lang-badge">Kotlin</span>
+            <span class="stars">⭐ 5</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="more-card reveal">
+        <div class="more-card-icon">
+          <svg class="icon" viewBox="0 0 24 24" style="width:1.6rem;height:1.6rem"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        </div>
+        <p>Explore more projects</p>
+        <a href="https://github.com/ometh2006?tab=repositories" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="font-size:0.82rem;padding:0.55rem 1.2rem">
+          View All Repositories
+          <svg class="icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="academind">
+  <div class="container">
+    <div class="academind-card reveal">
+      <div class="academind-grid">
+        <div>
+          <div class="academind-badge">📱 Android App</div>
+          <div class="academind-title">Academind</div>
+          <div class="academind-sub">Learn. Build. Grow.</div>
+          <p class="academind-desc">
+            A fully offline, native Android app to track your academic subjects, log test results,
+            and visualise your study performance with deep analytics — built entirely with Jetpack Compose and Material 3.
+          </p>
+          <div class="features">
+            <div class="feature">
+              <div class="feature-icon">🛠️</div>
+              <div>
+                <div class="feature-name">Future Improvements</div>
+                <!-- BUG 6 FIX: raw \n newlines don't render as line breaks in HTML —
+                     replaced with <br> tags so each item appears on its own line -->
+                <div class="feature-desc">
+                  Backup &amp; restore<br>
+                  Exam countdown<br>
+                  Advanced analytics<br>
+                  Export to PDF/CSV
+                </div>
+              </div>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">🔒</div>
+              <div>
+                <div class="feature-name">Privacy</div>
+                <div class="feature-desc">All data is stored locally on the device. The app does not collect or transmit personal information.</div>
+              </div>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">🧱</div>
+              <div>
+                <div class="feature-name">Tech Stack</div>
+                <div class="feature-desc">Language: Kotlin &nbsp;·&nbsp; UI: Jetpack Compose &nbsp;·&nbsp; Database: Room</div>
+              </div>
+            </div>
+          </div>
+          <div class="academind-cta">
+            <a href="https://github.com/ometh2006/academind-kotlinv3.4-fix/releases/tag/App" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              ⬇ Download App
+            </a>
+            <a href="http://focus.page.gd/?i=1" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+              ▶ Visit Website
+            </a>
+          </div>
+        </div>
+
+        <div class="phone-col">
+          <div style="position:relative">
+            <div class="phone">
+              <div class="phone-notch"></div>
+              <div class="phone-screen">
+                <div class="phone-app-header">
+                  <div class="phone-app-icon">A</div>
+                  <div class="phone-app-name">Academind</div>
+                  <div class="phone-app-tagline">Your Learning Partner</div>
+                </div>
+                <div class="phone-courses">
+                  <div class="phone-course">
+                    <div class="course-icon" style="background:linear-gradient(135deg,#10b981,#34d399)">📚</div>
+                    <div>
+                      <div class="course-name">Subject Management</div>
+                      <!-- BUG (minor): "24 lessons" made no sense for a study tracker — updated to descriptive meta -->
+                      <div class="course-meta">Track all subjects</div>
+                    </div>
+                  </div>
+                  <div class="phone-course">
+                    <div class="course-icon" style="background:linear-gradient(135deg,#3b82f6,#06b6d4)">📝</div>
+                    <div>
+                      <div class="course-name">Test Score Tracking</div>
+                      <div class="course-meta">Log every result</div>
+                    </div>
+                  </div>
+                  <div class="phone-course">
+                    <div class="course-icon" style="background:linear-gradient(135deg,#a855f7,#ec4899)">📊</div>
+                    <div>
+                      <div class="course-name">Performance Analytics</div>
+                      <div class="course-meta">Deep insights</div>
+                    </div>
+                  </div>
+                  <div class="phone-course">
+                    <div class="course-icon" style="background:linear-gradient(135deg,#f59e0b,#f97316)">🌙</div>
+                    <div>
+                      <div class="course-name">Clean UI</div>
+                      <div class="course-meta">Material 3 design</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="phone-badge-students">For Students</div>
+            <div class="phone-badge-rated">Top Rated ⭐</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Σ</div>
+  <h3>Let's Connect</h3>
+  <p class="footer-sub">Interested in collaboration or just want to say hi?</p>
+  <div class="footer-links">
+    <a href="https://t.me/OMETH_PM_BOT" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="font-size:0.85rem;padding:0.55rem 1.3rem">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.498c-1.046.413-1.04 1.383-.19 1.644l4.239 1.32 1.638 5.03c.224.632.436.88.894.88.373 0 .55-.173.768-.382l1.886-1.832 3.924 2.893c.724.399 1.243.192 1.424-.672l2.579-12.151c.26-1.046-.4-1.523-1.64-.943z"/></svg>
+      Telegram
+    </a>
+  </div>
+  <!-- BUG 3 FIX: had both <span id="year"> (set by JS) AND a hardcoded <p>@2026</p>
+       below it, resulting in two copyright lines. Removed the duplicate. -->
+  <div class="footer-copy">
+    <p>© <span id="year"></span> Σ Dev. All rights reserved.</p>
+  </div>
+</footer>
+
+<div id="music-player">
+  <div id="autoplay-notice">Click ▶ to enable music</div>
+  <div class="player-row">
+    <div class="player-label" id="player-label">
+      🎵 <span class="hide-sm">Interstellar Theme</span>
+    </div>
+    <div class="player-controls">
+      <button class="player-btn" id="btn-play" title="Play / Pause">▶</button>
+      <button class="player-btn" id="btn-mute" title="Mute / Unmute">🔊</button>
+    </div>
+    <div class="viz" id="viz">
+      <div class="viz-bar"></div>
+      <div class="viz-bar"></div>
+      <div class="viz-bar"></div>
+      <div class="viz-bar"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const skills = [
+  { name: 'HTML/CSS',    level: 90 },
+  { name: 'Python',      level: 85 },
+  { name: 'Git',         level: 85 },
+  { name: 'JavaScript',  level: 80 },
+  { name: 'React',       level: 75 },
+  { name: 'Android',     level: 70 },
+];
+const skillsGrid = document.getElementById('skills-grid');
+skills.forEach(s => {
+  skillsGrid.innerHTML += `
+    <div class="skill-card">
+      <div class="skill-top">
+        <span class="skill-name">${s.name}</span>
+        <span class="skill-pct">${s.level}%</span>
+      </div>
+      <div class="skill-bar-bg">
+        <div class="skill-bar-fill" data-level="${s.level}"></div>
+      </div>
+    </div>`;
+});
+
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+        bar.style.width = bar.dataset.level + '%';
+      });
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+(function() {
+  const canvas = document.getElementById('cosmos');
+  const ctx = canvas.getContext('2d');
+  let stars = [], shootingStars = [], lastShotTime = 0, rafId;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initStars();
+  }
+
+  function initStars() {
+    stars = [];
+    const n = Math.floor((canvas.width * canvas.height) / 3000);
+    for (let i = 0; i < n; i++) {
+      stars.push({
+        x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+        size: Math.random() * 1.8 + 0.4, speed: Math.random() * 0.4 + 0.08,
+        opacity: Math.random() * 0.5 + 0.5, twinkleSpeed: Math.random() * 0.02 + 0.008,
+        twinklePhase: Math.random() * Math.PI * 2,
+      });
+    }
+    shootingStars = Array.from({ length: 3 }, () => ({
+      x: 0, y: 0, length: 100, speed: 18, opacity: 0,
+      angle: Math.PI / 4, active: false, life: 0, maxLife: 60,
+    }));
+  }
+
+  function spawnShooting() {
+    const s = shootingStars.find(s => !s.active);
+    if (!s) return;
+    s.x = Math.random() * canvas.width * 0.8; s.y = Math.random() * canvas.height * 0.3;
+    s.active = true; s.life = 0; s.opacity = 1;
+    s.length = 80 + Math.random() * 120; s.speed = 15 + Math.random() * 10;
+    s.angle = Math.PI / 4 + (Math.random() - 0.5) * 0.3;
+  }
+
+  function drawNebula() {
+    const g1 = ctx.createRadialGradient(canvas.width*.2, canvas.height*.3, 0, canvas.width*.2, canvas.height*.3, canvas.width*.4);
+    g1.addColorStop(0,'rgba(100,50,150,0.05)'); g1.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = g1; ctx.fillRect(0,0,canvas.width,canvas.height);
+    const g2 = ctx.createRadialGradient(canvas.width*.8, canvas.height*.7, 0, canvas.width*.8, canvas.height*.7, canvas.width*.3);
+    g2.addColorStop(0,'rgba(50,100,200,0.04)'); g2.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = g2; ctx.fillRect(0,0,canvas.width,canvas.height);
+  }
+
+  function drawStar(s, t) {
+    const twinkle = Math.sin(t * s.twinkleSpeed + s.twinklePhase) * 0.3 + 0.7;
+    const op = s.opacity * twinkle;
+    ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(255,255,255,${op})`; ctx.fill();
+    if (s.size > 1.4) {
+      const g = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.size*3);
+      g.addColorStop(0,`rgba(200,220,255,${op*0.3})`); g.addColorStop(1,'rgba(200,220,255,0)');
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.size*3,0,Math.PI*2); ctx.fillStyle=g; ctx.fill();
+    }
+  }
+
+  function drawShooting(s) {
+    if (!s.active) return;
+    const fade = 1 - s.life / s.maxLife;
+    const g = ctx.createLinearGradient(s.x,s.y, s.x-Math.cos(s.angle)*s.length, s.y-Math.sin(s.angle)*s.length);
+    g.addColorStop(0,`rgba(255,255,255,${s.opacity*fade})`);
+    g.addColorStop(0.3,`rgba(200,220,255,${s.opacity*0.6*fade})`);
+    g.addColorStop(1,'rgba(100,150,255,0)');
+    ctx.beginPath(); ctx.moveTo(s.x,s.y);
+    ctx.lineTo(s.x-Math.cos(s.angle)*s.length, s.y-Math.sin(s.angle)*s.length);
+    ctx.strokeStyle=g; ctx.lineWidth=2; ctx.lineCap='round'; ctx.stroke();
+    const hg = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,8);
+    hg.addColorStop(0,`rgba(255,255,255,${s.opacity*fade})`); hg.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.beginPath(); ctx.arc(s.x,s.y,8,0,Math.PI*2); ctx.fillStyle=hg; ctx.fill();
+  }
+
+  function animate(t) {
+    ctx.fillStyle='rgba(5,5,20,1)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    drawNebula();
+    stars.forEach(s => {
+      s.y += s.speed;
+      if (s.y > canvas.height) { s.y = 0; s.x = Math.random()*canvas.width; }
+      drawStar(s, t);
+    });
+    if (t - lastShotTime > 2000 + Math.random()*3000) { spawnShooting(); lastShotTime = t; }
+    shootingStars.forEach(s => {
+      if (!s.active) return;
+      s.x += Math.cos(s.angle)*s.speed; s.y += Math.sin(s.angle)*s.speed; s.life++;
+      if (s.life >= s.maxLife || s.x > canvas.width || s.y > canvas.height) s.active = false;
+      drawShooting(s);
+    });
+    rafId = requestAnimationFrame(animate);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  lastShotTime = performance.now();
+  rafId = requestAnimationFrame(animate);
+})();
+
+(function() {
+  let audio = null, playing = false, muted = false;
+  const btnPlay = document.getElementById('btn-play');
+  const btnMute = document.getElementById('btn-mute');
+  const label   = document.getElementById('player-label');
+  const viz     = document.getElementById('viz');
+  const notice  = document.getElementById('autoplay-notice');
+
+  function initAudio() {
+    if (audio) return;
+    audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+    audio.loop = true; audio.volume = 0.3;
+  }
+
+  function setPlaying(state) {
+    playing = state;
+    btnPlay.textContent = playing ? '⏸' : '▶';
+    label.classList.toggle('playing', playing);
+    viz.classList.toggle('visible', playing);
+  }
+
+  btnPlay.addEventListener('click', async () => {
+    initAudio();
+    if (playing) { audio.pause(); setPlaying(false); }
+    else {
+      try { await audio.play(); setPlaying(true); notice.classList.remove('visible'); }
+      catch { notice.classList.add('visible'); }
+    }
+  });
+
+  btnMute.addEventListener('click', () => {
+    initAudio(); muted = !muted; audio.muted = muted;
+    btnMute.textContent = muted ? '🔇' : '🔊';
+  });
+})();
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>
